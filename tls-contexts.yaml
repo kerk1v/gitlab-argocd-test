@@ -1,0 +1,47 @@
+---
+apiVersion: getambassador.io/v2
+kind: TLSContext
+metadata:
+  name: gitlabcloudnative
+spec:
+  ambassador_id: ambassador-web-sys
+  hosts:
+    - gitlab.payconiq.io
+  secret: gitlab-tls.gitlab-apps
+  secret_namespacing: true
+
+---
+apiVersion: getambassador.io/v2
+kind: TLSContext
+metadata:
+  name: gitlabcloudnativeminio
+spec:
+  ambassador_id: ambassador-web-sys
+  hosts:
+    - minio.payconiq.io
+  secret: minio-tls.gitlab-apps
+  secret_namespacing: true
+
+#---
+#apiVersion: getambassador.io/v2
+#kind: TLSContext
+#metadata:
+#  name: miniocloudnative
+#spec:
+#  ambassador_id: ambassador-web-sys
+#  hosts:
+#    - minio.payconiq.io
+#  secret: gitlab-tls.gitlab-apps
+#  secret_namespacing: true
+
+---
+apiVersion: getambassador.io/v2
+kind: TLSContext
+metadata:
+  name: pagesgitlabcloudnative
+spec:
+  ambassador_id: ambassador-web-sys
+  hosts:
+    - "*.pages.gitlab.payconiq.io"
+  secret: gitlab-pages-tls.gitlab-apps
+  secret_namespacing: true
