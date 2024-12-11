@@ -15,7 +15,7 @@ spec:
     targetRevision: HEAD
     path: overlays/production
   destination:
-    server: https://kubernetes.default.svc
+    server: https://k3s.conxtor.com:6443
     namespace: gitlab
   syncPolicy:
     automated:
