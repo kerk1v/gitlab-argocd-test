@@ -8,9 +8,11 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/your-org/your-repo.git  # Replace with your Git repository
+    repoURL: https://github.com/kerk1v/gitlab-argocd-test.git
     targetRevision: HEAD
     path: gitlab-argocd/overlays/production
+    plugin:
+      name: kustomize-with-helm
   destination:
     server: https://kubernetes.default.svc
     namespace: gitlab

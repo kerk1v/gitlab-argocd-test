@@ -13,7 +13,7 @@ patches:
     kind: HelmChart
     name: gitlab
 
-commonLabels:
+labels:
   environment: production
   app.kubernetes.io/environment: production
 
