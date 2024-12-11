@@ -1,0 +1,100 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: gitlab
+spec:
+  values:
+    global:
+      hosts:
+        domain: gitlab.conxtor.com
+      email:
+        from: gitlab@conxtor.com
+        display_name: GitLab Production
+      smtp:
+        enabled: true
+        address: smtp.conxtor.com
+        port: 587
+        user_name: gitlab
+        password:
+          secret: gitlab-smtp-password
+          key: password
+    
+    gitlab:
+      webservice:
+        minReplicas: 3
+        maxReplicas: 6
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+          limits:
+            cpu: 2
+            memory: 4Gi
+        ingress:
+          enabled: true
+          provider: traefik
+          annotations:
+            kubernetes.io/ingress.class: traefik
+            traefik.ingress.kubernetes.io/router.entrypoints: websecure
+            traefik.ingress.kubernetes.io/router.tls: "true"
+            traefik.ingress.kubernetes.io/router.middlewares: "default-redirect-https@kubernetescrd"
+      
+      sidekiq:
+        minReplicas: 3
+        maxReplicas: 5
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+          limits:
+            cpu: 2
+            memory: 4Gi
+      
+      gitaly:
+        persistence:
+          size: 100Gi
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+          limits:
+            cpu: 2
+            memory: 4Gi
+    
+    redis:
+      resources:
+        requests:
+          cpu: 1
+          memory: 2Gi
+        limits:
+          cpu: 2
+          memory: 4Gi
+      
+    postgresql:
+      resources:
+        requests:
+          cpu: 1
+          memory: 2Gi
+        limits:
+          cpu: 2
+          memory: 4Gi
+      persistence:
+        size: 100Gi
+    
+    prometheus:
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 2Gi
+      
+    grafana:
+      resources:
+        requests:
+          cpu: 250m
+          memory: 512Mi
+        limits:
+          cpu: 500m
+          memory: 1Gi

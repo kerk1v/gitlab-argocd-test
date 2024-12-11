@@ -1,0 +1,78 @@
+global:
+  edition: ce
+  hosts:
+    domain: conxtor.com
+    https: true
+  initialRootPassword:
+    secret: gitlab-root-password
+    key: password
+
+certmanager:
+  install: false
+
+nginx-ingress:
+  enabled: false
+
+gitlab-runner:
+  install: false
+
+postgresql:
+  install: true
+  postgresqlUsername: gitlab
+  postgresqlDatabase: gitlab
+  postgresqlPassword:
+    secret: gitlab-postgresql-password
+    key: password
+
+redis:
+  install: true
+
+minio:
+  install: true
+
+gitlab:
+  webservice:
+    minReplicas: 2
+    maxReplicas: 4
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1.5Gi
+      limits:
+        cpu: 2
+        memory: 2.5Gi
+    ingress:
+      enabled: true
+      provider: traefik
+      annotations:
+        kubernetes.io/ingress.class: traefik
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.tls: "true"
+
+  sidekiq:
+    minReplicas: 2
+    maxReplicas: 4
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1Gi
+      limits:
+        cpu: 1
+        memory: 2Gi
+
+  gitaly:
+    persistence:
+      size: 50Gi
+    resources:
+      requests:
+        cpu: 300m
+        memory: 1Gi
+      limits:
+        cpu: 1
+        memory: 2Gi
+
+prometheus:
+  install: true
+
+grafana:
+  install: true
