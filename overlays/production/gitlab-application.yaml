@@ -5,14 +5,15 @@ metadata:
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-options: PruneLast=true
+    argocd.argoproj.io/kustomize-options: "--enable-helm"
 spec:
   project: default
   source:
     repoURL: https://github.com/kerk1v/gitlab-argocd-test.git
     targetRevision: HEAD
     path: gitlab-argocd/overlays/production
-    kustomize:
-      buildOptions: "--enable-helm"
   destination:
     server: https://kubernetes.default.svc
     namespace: gitlab
