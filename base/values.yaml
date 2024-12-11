@@ -20,9 +20,7 @@ postgresql:
   install: true
   postgresqlUsername: gitlab
   postgresqlDatabase: gitlab
-  postgresqlPassword:
-    secret: gitlab-postgresql-password
-    key: password
+  postgresqlPassword: "gitlab-postgresql-password"
 
 redis:
   install: true
