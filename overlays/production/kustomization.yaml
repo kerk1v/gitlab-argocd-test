@@ -14,8 +14,9 @@ patches:
     name: gitlab
 
 labels:
-  environment: production
-  app.kubernetes.io/environment: production
+- pairs:
+    environment: production
+    app.kubernetes.io/environment: production
 
 configMapGenerator:
 - name: gitlab-config
